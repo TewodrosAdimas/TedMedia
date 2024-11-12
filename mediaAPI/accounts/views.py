@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import get_user_model
 from .serializers import UserRegistrationSerializer, UserLoginSerializer
 from rest_framework.decorators import api_view
+from notifications.models import Notification
 
 
 User = get_user_model()
