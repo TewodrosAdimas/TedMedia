@@ -5,7 +5,7 @@
 ---
 
 #### **1. List Posts**
-- **URL**: `/api/posts/`
+- **URL**: `/posts/posts/`
 - **Method**: `GET`
 - **Description**: Returns a list of all posts.
 - **Authentication**: Required (Logged-in user).
@@ -27,7 +27,7 @@
 ---
 
 #### **2. Create a Post**
-- **URL**: `/api/posts/`
+- **URL**: `/posts/posts/`
 - **Method**: `POST`
 - **Description**: Creates a new post. The `author` field is automatically set to the logged-in user.
 - **Authentication**: Required (Logged-in user).
@@ -53,7 +53,7 @@
 ---
 
 #### **3. Retrieve a Post**
-- **URL**: `/api/posts/{id}/`
+- **URL**: `/posts/posts/{id}/`
 - **Method**: `GET`
 - **Description**: Retrieves a specific post by ID.
 - **Authentication**: Required (Logged-in user).
@@ -72,7 +72,7 @@
 ---
 
 #### **4. Update a Post**
-- **URL**: `/api/posts/{id}/`
+- **URL**: `/posts/posts/{id}/`
 - **Method**: `PUT` or `PATCH`
 - **Description**: Updates a specific post. Only the author of the post can update it.
 - **Authentication**: Required (Logged-in user, must be the author of the post).
@@ -98,7 +98,7 @@
 ---
 
 #### **5. Delete a Post**
-- **URL**: `/api/posts/{id}/`
+- **URL**: `/posts/posts/{id}/`
 - **Method**: `DELETE`
 - **Description**: Deletes a specific post. Only the author of the post can delete it.
 - **Authentication**: Required (Logged-in user, must be the author of the post).
@@ -112,7 +112,7 @@
 ---
 
 #### **1. List Comments**
-- **URL**: `/api/comments/`
+- **URL**: `/posts/comments/`
 - **Method**: `GET`
 - **Description**: Returns a list of all comments.
 - **Authentication**: Required (Logged-in user).
@@ -134,7 +134,7 @@
 ---
 
 #### **2. Create a Comment**
-- **URL**: `/api/comments/`
+- **URL**: `/posts/comments/`
 - **Method**: `POST`
 - **Description**: Creates a new comment. The `author` field is automatically set to the logged-in user, and the comment is associated with a specific post.
 - **Authentication**: Required (Logged-in user).
@@ -160,7 +160,7 @@
 ---
 
 #### **3. Retrieve a Comment**
-- **URL**: `/api/comments/{id}/`
+- **URL**: `/posts/comments/{id}/`
 - **Method**: `GET`
 - **Description**: Retrieves a specific comment by ID.
 - **Authentication**: Required (Logged-in user).
@@ -179,7 +179,7 @@
 ---
 
 #### **4. Update a Comment**
-- **URL**: `/api/comments/{id}/`
+- **URL**: `/posts/comments/{id}/`
 - **Method**: `PUT` or `PATCH`
 - **Description**: Updates a specific comment. Only the author of the comment can update it.
 - **Authentication**: Required (Logged-in user, must be the author of the comment).
@@ -204,7 +204,7 @@
 ---
 
 #### **5. Delete a Comment**
-- **URL**: `/api/comments/{id}/`
+- **URL**: `/posts/comments/{id}/`
 - **Method**: `DELETE`
 - **Description**: Deletes a specific comment. Only the author of the comment can delete it.
 - **Authentication**: Required (Logged-in user, must be the author of the comment).
@@ -215,8 +215,8 @@
 
 ### **Filtering and Search**
 - **Posts**: You can filter posts by title or content using query parameters, such as:
-    - `/api/posts/?title=searchterm`
-    - `/api/posts/?content=searchterm`
+    - `/posts/posts/?title=searchterm`
+    - `/posts/posts/?content=searchterm`
   
 ### **Permissions**
 - Both **Post** and **Comment** endpoints require authentication. 
