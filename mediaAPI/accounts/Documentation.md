@@ -1,9 +1,6 @@
-
-
 # **API Documentation**
 
 ## **Base URL**
-All endpoints are prefixed with the base URL:  
 ```
 http://yourdomain.com/accounts/
 ```
@@ -12,7 +9,7 @@ http://yourdomain.com/accounts/
 
 ### 1. **User Registration**
 
-- **Endpoint:** `POST /register/`
+- **Endpoint:** `POST accounts/register/`
 - **Description:** Registers a new user with the provided credentials and profile details.
 - **Request Body:**
     ```json
@@ -43,7 +40,7 @@ http://yourdomain.com/accounts/
 
 ### 2. **User Login**
 
-- **Endpoint:** `POST /login/`
+- **Endpoint:** `POST accounts/login/`
 - **Description:** Authenticates a user and returns an authorization token.
 - **Request Body:**
     ```json
@@ -71,7 +68,7 @@ http://yourdomain.com/accounts/
 
 ### 3. **User Profile**
 
-- **Endpoint:** `GET /profile/`
+- **Endpoint:** `GET accounts/profile/`
 - **Description:** Retrieves the profile information of the authenticated user.
 - **Headers:**  
     - `Authorization: Token <auth_token>`
@@ -96,7 +93,7 @@ http://yourdomain.com/accounts/
 
 ### 4. **Update User Profile**
 
-- **Endpoint:** `PUT /profile/`
+- **Endpoint:** `PUT accounts/profile/`
 - **Description:** Updates the authenticated user’s profile information.
 - **Headers:**  
     - `Authorization: Token <auth_token>`
@@ -130,7 +127,7 @@ http://yourdomain.com/accounts/
 
 ### 5. **Follow a User**
 
-- **Endpoint:** `POST /follow/<user_id>/`
+- **Endpoint:** `POST accounts/follow/<user_id>/`
 - **Description:** Follows another user and generates a notification for the followed user.
 - **Headers:**  
     - `Authorization: Token <auth_token>`
@@ -168,7 +165,7 @@ curl -X POST -H "Authorization: Token <your-token>" http://127.0.0.1:8000/accoun
 
 ### 6. **Unfollow a User**
 
-- **Endpoint:** `POST /unfollow/<user_id>/`
+- **Endpoint:** `POST accounts/unfollow/<user_id>/`
 - **Description:** Unfollows a user.
 - **Headers:**  
     - `Authorization: Token <auth_token>`
@@ -211,5 +208,3 @@ When a user follows another user, a **notification** is generated for the follow
 - **Verb**: `"started following you"`.
 
 ---
-
-This API documentation covers user registration, login, profile management, follow/unfollow functionality, and notifications with clear examples and response formats.
