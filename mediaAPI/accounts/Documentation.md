@@ -28,8 +28,7 @@ http://yourdomain.com/accounts/
             "id": "user_id",
             "username": "string",
             "bio": "string",
-            "profile_picture": "URL",
-            "token": "auth_token"
+            "profile_picture": "URL"
         }
         ```
     - **Failure (400 Bad Request):**  
@@ -95,7 +94,7 @@ http://yourdomain.com/accounts/
 
 ### 4. **Update User Profile**
 
-- **Endpoint:** `PUT /profile/`
+- **Endpoint:** `PUT accounts/profile/`
 - **Description:** Updates the authenticated user’s profile information.
 - **Headers:**  
     - `Authorization: Token <auth_token>`
@@ -103,6 +102,7 @@ http://yourdomain.com/accounts/
     ```json
     {
         "username": "string",
+        "password": "string",
         "bio": "string (optional)",
         "profile_picture": "file (optional)"
     }

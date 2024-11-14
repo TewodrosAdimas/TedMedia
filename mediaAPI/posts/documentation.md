@@ -1,226 +1,148 @@
+## **Post API Endpoints**
 
-
-### **Post API Endpoints**
-
----
-
-#### **1. List Posts**
-- **URL**: `/posts/posts/`
-- **Method**: `GET`
-- **Description**: Returns a list of all posts.
-- **Authentication**: Required (Logged-in user).
-- **Response**:
-    - **200 OK**
-    ```json
-    [
-        {
-            "id": 1,
-            "title": "Post Title",
-            "content": "Post content here",
-            "created_at": "2024-11-01T12:34:56Z",
-            "updated_at": "2024-11-02T12:34:56Z"
-        },
-        ...
-    ]
-    ```
-
----
-
-#### **2. Create a Post**
-- **URL**: `/posts/posts/`
-- **Method**: `POST`
-- **Description**: Creates a new post. The `author` field is automatically set to the logged-in user.
-- **Authentication**: Required (Logged-in user).
-- **Request Body**:
-    ```json
-    {
-        "title": "New Post Title",
-        "content": "Content of the post"
-    }
-    ```
-- **Response**:
-    - **201 Created**
-    ```json
-    {
-        "id": 2,
-        "title": "New Post Title",
-        "content": "Content of the post",
-        "created_at": "2024-11-02T14:00:00Z",
-        "updated_at": "2024-11-02T14:00:00Z"
-    }
-    ```
-
----
-
-#### **3. Retrieve a Post**
-- **URL**: `/posts/posts/{id}/`
-- **Method**: `GET`
-- **Description**: Retrieves a specific post by ID.
-- **Authentication**: Required (Logged-in user).
-- **Response**:
-    - **200 OK**
-    ```json
-    {
-        "id": 1,
-        "title": "Post Title",
-        "content": "Post content here",
-        "created_at": "2024-11-01T12:34:56Z",
-        "updated_at": "2024-11-02T12:34:56Z"
-    }
-    ```
-
----
-
-#### **4. Update a Post**
-- **URL**: `/posts/posts/{id}/`
-- **Method**: `PUT` or `PATCH`
-- **Description**: Updates a specific post. Only the author of the post can update it.
-- **Authentication**: Required (Logged-in user, must be the author of the post).
-- **Request Body**:
-    ```json
-    {
-        "title": "Updated Post Title",
-        "content": "Updated content of the post"
-    }
-    ```
-- **Response**:
-    - **200 OK**
-    ```json
-    {
-        "id": 1,
-        "title": "Updated Post Title",
-        "content": "Updated content of the post",
-        "created_at": "2024-11-01T12:34:56Z",
-        "updated_at": "2024-11-02T15:00:00Z"
-    }
-    ```
-
----
-
-#### **5. Delete a Post**
-- **URL**: `/posts/posts/{id}/`
-- **Method**: `DELETE`
-- **Description**: Deletes a specific post. Only the author of the post can delete it.
-- **Authentication**: Required (Logged-in user, must be the author of the post).
-- **Response**:
-    - **204 No Content**
-
----
-
-### **Comment API Endpoints**
-
----
-
-#### **1. List Comments**
-- **URL**: `/posts/comments/`
-- **Method**: `GET`
-- **Description**: Returns a list of all comments.
-- **Authentication**: Required (Logged-in user).
-- **Response**:
-    - **200 OK**
-    ```json
-    [
-        {
-            "id": 1,
-            "post": 1,
-            "content": "This is a comment",
-            "created_at": "2024-11-01T12:34:56Z",
-            "updated_at": "2024-11-02T12:34:56Z"
-        },
-        ...
-    ]
-    ```
-
----
-
-#### **2. Create a Comment**
-- **URL**: `/posts/comments/`
-- **Method**: `POST`
-- **Description**: Creates a new comment. The `author` field is automatically set to the logged-in user, and the comment is associated with a specific post.
-- **Authentication**: Required (Logged-in user).
-- **Request Body**:
-    ```json
-    {
-        "post": 1,
-        "content": "This is a comment"
-    }
-    ```
-- **Response**:
-    - **201 Created**
-    ```json
-    {
-        "id": 2,
-        "post": 1,
-        "content": "This is a comment",
-        "created_at": "2024-11-02T14:00:00Z",
-        "updated_at": "2024-11-02T14:00:00Z"
-    }
-    ```
-
----
-
-#### **3. Retrieve a Comment**
-- **URL**: `/posts/comments/{id}/`
-- **Method**: `GET`
-- **Description**: Retrieves a specific comment by ID.
-- **Authentication**: Required (Logged-in user).
-- **Response**:
-    - **200 OK**
-    ```json
-    {
-        "id": 1,
-        "post": 1,
-        "content": "This is a comment",
-        "created_at": "2024-11-01T12:34:56Z",
-        "updated_at": "2024-11-02T12:34:56Z"
-    }
-    ```
-
----
-
-#### **4. Update a Comment**
-- **URL**: `/posts/comments/{id}/`
-- **Method**: `PUT` or `PATCH`
-- **Description**: Updates a specific comment. Only the author of the comment can update it.
-- **Authentication**: Required (Logged-in user, must be the author of the comment).
-- **Request Body**:
-    ```json
-    {
-        "content": "Updated content of the comment"
-    }
-    ```
-- **Response**:
-    - **200 OK**
-    ```json
-    {
-        "id": 1,
-        "post": 1,
-        "content": "Updated content of the comment",
-        "created_at": "2024-11-01T12:34:56Z",
-        "updated_at": "2024-11-02T15:00:00Z"
-    }
-    ```
-
----
-
-#### **5. Delete a Comment**
-- **URL**: `/posts/comments/{id}/`
-- **Method**: `DELETE`
-- **Description**: Deletes a specific comment. Only the author of the comment can delete it.
-- **Authentication**: Required (Logged-in user, must be the author of the comment).
-- **Response**:
-    - **204 No Content**
-
----
-
-### **Filtering and Search**
-- **Posts**: You can filter posts by title or content using query parameters, such as:
-    - `/posts/posts/?title=searchterm`
-    - `/posts/posts/?content=searchterm`
+### 1. **List Posts**
+- **Endpoint:** `/posts/posts/`
+- **Method:** `GET`
+- **Description:** Retrieves a list of all posts.
+- **Authentication Required:** Yes, user must be authenticated.
+- **Permissions:** Only authenticated users can access this endpoint.
+- **Response:**
+  - `200 OK`: List of posts (serialized data).
   
+### 2. **Create a Post**
+- **Endpoint:** `/posts/posts/`
+- **Method:** `POST`
+- **Description:** Creates a new post. The authenticated user will be automatically set as the author.
+- **Authentication Required:** Yes, user must be authenticated.
+- **Permissions:** Only authenticated users can create posts.
+- **Request Body:** 
+  ```json
+  {
+    "title": "Post Title",
+    "content": "Post Content"
+  }
+  ```
+- **Response:**
+  - `201 Created`: Post created successfully.
+  - `400 Bad Request`: If required fields (`title`, `content`) are missing.
+
+### 3. **Retrieve a Specific Post**
+- **Endpoint:** `/posts/posts/{id}/`
+- **Method:** `GET`
+- **Description:** Retrieves a specific post by its ID.
+- **Authentication Required:** Yes, user must be authenticated.
+- **Permissions:** Post can be viewed by any authenticated user.
+- **Response:**
+  - `200 OK`: Detailed data of the requested post.
+  - `404 Not Found`: If post with given ID does not exist.
+
+### 4. **Update a Post**
+- **Endpoint:** `/posts/posts/{id}/`
+- **Method:** `PUT`
+- **Description:** Updates an existing post. Only the author of the post can update it.
+- **Authentication Required:** Yes, user must be authenticated.
+- **Permissions:** Only the author of the post can update it.
+- **Request Body:**
+  ```json
+  {
+    "title": "Updated Post Title",
+    "content": "Updated Content"
+  }
+  ```
+- **Response:**
+  - `200 OK`: Post updated successfully.
+  - `400 Bad Request`: If invalid data is provided.
+  - `404 Not Found`: If post with given ID does not exist.
+
+### 5. **Delete a Post**
+- **Endpoint:** `/posts/posts/{id}/`
+- **Method:** `DELETE`
+- **Description:** Deletes an existing post. Only the author of the post can delete it.
+- **Authentication Required:** Yes, user must be authenticated.
+- **Permissions:** Only the author of the post can delete it.
+- **Response:**
+  - `204 No Content`: Post deleted successfully.
+  - `404 Not Found`: If post with given ID does not exist.
+
+## **Comment API Endpoints**
+
+### 1. **Create a Comment**
+- **Endpoint:** `/posts/posts/{post_id}/comments/`
+- **Method:** `POST`
+- **Description:** Adds a comment to a post. The authenticated user will be set as the author of the comment.
+- **Authentication Required:** Yes, user must be authenticated.
+- **Permissions:** Only authenticated users can comment on posts.
+- **Request Body:**
+  ```json
+  {
+    "content": "This is a comment."
+  }
+  ```
+- **Response:**
+  - `201 Created`: Comment added successfully.
+  - `400 Bad Request`: If content is not provided in the request.
+
+### 2. **Retrieve Comments for a Post**
+- **Endpoint:** `/posts/posts/{post_id}/comments/`
+- **Method:** `GET`
+- **Description:** Retrieves all comments for a specific post.
+- **Authentication Required:** Yes, user must be authenticated.
+- **Permissions:** Any authenticated user can view the comments of a post.
+- **Response:**
+  - `200 OK`: List of comments for the specified post.
+
+### 3. **Update a Comment**
+- **Endpoint:** `/posts/comments/{id}/`
+- **Method:** `PUT`
+- **Description:** Updates a specific comment. Only the author of the comment can update it.
+- **Authentication Required:** Yes, user must be authenticated.
+- **Permissions:** Only the author of the comment can update it.
+- **Request Body:**
+  ```json
+  {
+    "content": "Updated comment content"
+  }
+  ```
+- **Response:**
+  - `200 OK`: Comment updated successfully.
+  - `404 Not Found`: If comment with given ID does not exist.
+
+### 4. **Delete a Comment**
+- **Endpoint:** `/posts/comments/{id}/`
+- **Method:** `DELETE`
+- **Description:** Deletes a specific comment. Only the author of the comment can delete it.
+- **Authentication Required:** Yes, user must be authenticated.
+- **Permissions:** Only the author of the comment can delete it.
+- **Response:**
+  - `204 No Content`: Comment deleted successfully.
+  - `404 Not Found`: If comment with given ID does not exist.
+
+## **Like API Endpoints**
+
+### 1. **Like a Post**
+- **Endpoint:** `/posts/posts/like/{post_id}/`
+- **Method:** `POST`
+- **Description:** Likes a post and generates a notification for the post author.
+- **Authentication Required:** Yes, user must be authenticated.
+- **Permissions:** Only authenticated users can like a post.
+- **Response:**
+  - `201 Created`: Post liked successfully.
+  - `400 Bad Request`: If user has already liked the post.
+
+### 2. **Unlike a Post**
+- **Endpoint:** `/posts/posts/unlike/{post_id}/`
+- **Method:** `DELETE`
+- **Description:** Unlikes a post.
+- **Authentication Required:** Yes, user must be authenticated.
+- **Permissions:** Only authenticated users can unlike a post.
+- **Response:**
+  - `204 No Content`: Post unliked successfully.
+  - `400 Bad Request`: If the user has not liked the post yet.
+
+
 ### **Permissions**
-- Both **Post** and **Comment** endpoints require authentication. 
-- Only the **author** of a post or comment can update or delete it. This is enforced by the `IsAuthorOrReadOnly` permission.
+
+- `IsAuthenticated`: Ensures the user must be logged in to access certain endpoints.
+- `IsAuthorOrReadOnly`: Custom permission allowing only the author of a post or comment to modify or delete it. Other users can view the post/comment, but not update or delete.
 
 ---
-

@@ -47,9 +47,9 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.contenttypes.models import ContentType
-from .models import Post, Like, Notification
+from .models import Post, Like
 from django.contrib.auth.models import User
-
+from notifications.models import Notification
 @api_view(['POST'])
 def like_post(request, post_id):
     """

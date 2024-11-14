@@ -1,9 +1,23 @@
 # notifications/views.py
 
 from rest_framework import status
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Notification
+from rest_framework.permissions import IsAuthenticated
+from .serializers import NotificationSerializer 
+from rest_framework.decorators import api_view, permission_classes
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_notifications(request):
+    """
+    View to get all notifications for the authenticated user.
+    """
+    notifications = Notification.objects.filter(recipient=request.user).order_by('-timestamp')
+    serializer = NotificationSerializer(notifications, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 @api_view(['POST'])
 def mark_notification_read(request, notification_id):

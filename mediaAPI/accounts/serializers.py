@@ -2,8 +2,22 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
+from django.contrib.auth import get_user_model
 
 User = get_user_model()
+
+class UserProfileUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username', 'bio', 'profile_picture')  # Do not include password here
+
+    def update(self, instance, validated_data):
+        # Only update bio and profile picture
+        instance.bio = validated_data.get('bio', instance.bio)
+        # instance.username = validated_data.get('username', instance.username)
+        instance.profile_picture = validated_data.get('profile_picture', instance.profile_picture)
+        instance.save()
+        return instance
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     class Meta:

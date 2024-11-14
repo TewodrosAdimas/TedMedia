@@ -4,9 +4,20 @@ from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import get_user_model
-from .serializers import UserRegistrationSerializer, UserLoginSerializer
+from .serializers import UserRegistrationSerializer, UserLoginSerializer, UserProfileUpdateSerializer
 from rest_framework.decorators import api_view
 from notifications.models import Notification
+
+User = get_user_model()
+
+class UserProfileView(generics.RetrieveUpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserProfileUpdateSerializer  # Use the profile update serializer here
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user  # Return the current authenticated user
+
 
 
 User = get_user_model()
@@ -24,14 +35,6 @@ class UserLoginView(APIView):
         user = serializer.validated_data
         token, created = Token.objects.get_or_create(user=user)
         return Response({'token': token.key, 'username': user.username}, status=status.HTTP_200_OK)
-
-class UserProfileView(generics.RetrieveUpdateAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserRegistrationSerializer  # Reuse registration serializer for profile update
-    permission_classes = [IsAuthenticated]
-
-    def get_object(self):
-        return self.request.user  # Return the current authenticated user
 
 
 @api_view(['POST'])
