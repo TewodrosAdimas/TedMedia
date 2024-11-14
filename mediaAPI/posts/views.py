@@ -1,6 +1,6 @@
 from django.contrib.contenttypes.models import ContentType
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, generics
 from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -10,7 +10,21 @@ from .models import Post, Comment, Like
 from .serializers import PostSerializer, CommentSerializer, LikeSerializer
 from .permissions import IsAuthorOrReadOnly
 from notifications.models import Notification
+from accounts.models import CustomUser  # assuming your custom user model is in the accounts app
 
+class UserFeedView(generics.ListAPIView):
+    """
+    View to retrieve a feed of posts from users that the current user follows.
+    """
+    serializer_class = PostSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        # Get the list of users the current user is following
+        following_users = self.request.user.following.all()
+        
+        # Filter posts from followed users and order by creation date
+        return Post.objects.filter(author__in=following_users).order_by('-created_at')
 
 
 

@@ -1,7 +1,9 @@
-# API Documentation
 
-## Base URL
-All endpoints are prefixed by the base URL:  
+
+# **API Documentation**
+
+## **Base URL**
+All endpoints are prefixed with the base URL:  
 ```
 http://yourdomain.com/accounts/
 ```
@@ -10,7 +12,7 @@ http://yourdomain.com/accounts/
 
 ### 1. **User Registration**
 
-- **Endpoint:** `POST accounts/register/`
+- **Endpoint:** `POST /register/`
 - **Description:** Registers a new user with the provided credentials and profile details.
 - **Request Body:**
     ```json
@@ -41,7 +43,7 @@ http://yourdomain.com/accounts/
 
 ### 2. **User Login**
 
-- **Endpoint:** `POST accounts/login/`
+- **Endpoint:** `POST /login/`
 - **Description:** Authenticates a user and returns an authorization token.
 - **Request Body:**
     ```json
@@ -69,7 +71,7 @@ http://yourdomain.com/accounts/
 
 ### 3. **User Profile**
 
-- **Endpoint:** `GET accounts/profile/`
+- **Endpoint:** `GET /profile/`
 - **Description:** Retrieves the profile information of the authenticated user.
 - **Headers:**  
     - `Authorization: Token <auth_token>`
@@ -94,7 +96,7 @@ http://yourdomain.com/accounts/
 
 ### 4. **Update User Profile**
 
-- **Endpoint:** `PUT accounts/profile/`
+- **Endpoint:** `PUT /profile/`
 - **Description:** Updates the authenticated user’s profile information.
 - **Headers:**  
     - `Authorization: Token <auth_token>`
@@ -123,10 +125,91 @@ http://yourdomain.com/accounts/
             "error": "validation errors"
         }
         ```
+
 ---
 
-## Notes
+### 5. **Follow a User**
 
-- **Authentication:** `Token` authentication is required for accessing the profile endpoints (`GET /profile/` and `PUT /profile/`).
-- **Error Handling:** The API returns appropriate error messages with status codes, such as `400` for validation issues and `401` for authentication errors.
+- **Endpoint:** `POST /follow/<user_id>/`
+- **Description:** Follows another user and generates a notification for the followed user.
+- **Headers:**  
+    - `Authorization: Token <auth_token>`
+- **Response:**
+    - **Success (200 OK):**
+        ```json
+        {
+            "message": "You are now following this user"
+        }
+        ```
+    - **Failure (400 Bad Request):**
+        ```json
+        {
+            "error": "You cannot follow yourself"
+        }
+        ```
+        ```json
+        {
+            "message": "You already follow this user"
+        }
+        ```
+    - **Failure (404 Not Found):**
+        ```json
+        {
+            "detail": "User not found."
+        }
+        ```
 
+### **Example Request**
+```bash
+curl -X POST -H "Authorization: Token <your-token>" http://127.0.0.1:8000/accounts/follow/1/
+```
+
+---
+
+### 6. **Unfollow a User**
+
+- **Endpoint:** `POST /unfollow/<user_id>/`
+- **Description:** Unfollows a user.
+- **Headers:**  
+    - `Authorization: Token <auth_token>`
+- **Response:**
+    - **Success (200 OK):**
+        ```json
+        {
+            "message": "You have unfollowed this user"
+        }
+        ```
+    - **Failure (400 Bad Request):**
+        ```json
+        {
+            "error": "You cannot unfollow yourself"
+        }
+        ```
+        ```json
+        {
+            "message": "You do not follow this user"
+        }
+        ```
+    - **Failure (404 Not Found):**
+        ```json
+        {
+            "detail": "User not found."
+        }
+        ```
+
+### **Example Request**
+```bash
+curl -X POST -H "Authorization: Token <your-token>" http://127.0.0.1:8000/accounts/unfollow/1/
+```
+
+---
+
+## **Notifications**
+When a user follows another user, a **notification** is generated for the followed user with details:
+- **Recipient**: The user who is followed.
+- **Actor**: The user who followed.
+- **Verb**: `"started following you"`.
+
+---
+
+This API documentation covers user registration, login, profile management, follow/unfollow functionality, and notifications with clear examples and response formats.
